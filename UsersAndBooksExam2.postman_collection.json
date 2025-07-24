@@ -2336,7 +2336,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/api/v1/book/set-status/unavailable/1100",
+					"raw": "localhost:8080/api/v1/book/set-status/unavailable/100",
 					"host": [
 						"localhost"
 					],
@@ -2347,13 +2347,71 @@
 						"book",
 						"set-status",
 						"unavailable",
-						"1100"
+						"100"
 					]
 				}
 			},
 			"response": [
 				{
 					"name": "Error, the user does not exist",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"iD\":\"100\",\r\n    \"name\":\"Abdullah\",\r\n    \"age\":26,\r\n    \"balance\":5000,\r\n    \"role\":\"librarian\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/book/set-status/unavailable/100",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"book",
+								"set-status",
+								"unavailable",
+								"100"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 24 Jul 2025 09:13:51 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"messege\": \"Error, the user does not exist\"\n}"
+				},
+				{
+					"name": "Book not found",
 					"originalRequest": {
 						"method": "PUT",
 						"header": [],
@@ -2396,7 +2454,7 @@
 						},
 						{
 							"key": "Date",
-							"value": "Thu, 24 Jul 2025 09:13:51 GMT"
+							"value": "Thu, 24 Jul 2025 09:21:48 GMT"
 						},
 						{
 							"key": "Keep-Alive",
@@ -2408,7 +2466,119 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n    \"messege\": \"Error, the user does not exist\"\n}"
+					"body": "{\n    \"messege\": \"Error, not found.\"\n}"
+				},
+				{
+					"name": "Error, only librarian can change book status",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"iD\":\"100\",\r\n    \"name\":\"Abdullah\",\r\n    \"age\":26,\r\n    \"balance\":5000,\r\n    \"role\":\"customer\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/book/set-status/unavailable/1100",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"book",
+								"set-status",
+								"unavailable",
+								"1100"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 24 Jul 2025 09:22:21 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"messege\": \"Error, only librarian can change book status\"\n}"
+				},
+				{
+					"name": "Book status changed to unavailable successfully",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"iD\":\"100\",\r\n    \"name\":\"Abdullah\",\r\n    \"age\":26,\r\n    \"balance\":5000,\r\n    \"role\":\"librarian\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/book/set-status/unavailable/100",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"book",
+								"set-status",
+								"unavailable",
+								"100"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 24 Jul 2025 09:22:58 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"messege\": \"Book status changed to unavailable successfully\"\n}"
 				}
 			]
 		}
