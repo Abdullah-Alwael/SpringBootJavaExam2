@@ -110,21 +110,27 @@ public class BookController {
                     ApiResponse(errors.getFieldError().getDefaultMessage()));
         }
 
-        ArrayList<User> users = userService.getUsers();
-        boolean found = false;
-        for (User u:users){
-            if (u.getID().equals(user.getID())){ // check internal database, not user values
-                found = true;
-                if (!u.getRole().equals("librarian")){
-                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new
-                            ApiResponse("Error, only librarian can change book status"));
-                }
-            }
-        }
+        // the array creates a new userService object, hence it becomes empty
+//        ArrayList<User> users = userService.getUsers();
+//        boolean found = false;
+//        for (User u:users){
+//            if (u.getID().equals(user.getID())){ // check internal database, not user values
+//                found = true;
+//                if (!u.getRole().equals("librarian")){
+//                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new
+//                            ApiResponse("Error, only librarian can change book status"));
+//                }
+//            }
+//        }
+//
+//        if (!found){
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new
+//                    ApiResponse("Error, the user does not exist"));
+//        }
 
-        if (!found){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new
-                    ApiResponse("Error, the user does not exist"));
+        if (!user.getRole().equals("librarian")){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new
+                    ApiResponse("Error, only librarian can change book status"));
         }
 
         if (bookService.makeBookUnavailable(iD)){
