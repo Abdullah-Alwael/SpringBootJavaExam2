@@ -1,8 +1,6 @@
 package com.spring.boot.springbootjavaexam2.Model;
 
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -16,9 +14,11 @@ public class Book {
     private String name;
 
     @NotNull(message = "number_of_pages should not be empty")
+    @Positive(message = "Pages should not be less than 1")
     private int number_of_pages;
 
     @NotNull(message = "price should not be empty")
+    @PositiveOrZero(message = "The price can not be negative")
     private double price;
 
     @NotEmpty(message = "category should not be empty")
