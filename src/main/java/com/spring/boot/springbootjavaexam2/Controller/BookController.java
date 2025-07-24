@@ -4,6 +4,7 @@ import com.spring.boot.springbootjavaexam2.Api.ApiResponse;
 import com.spring.boot.springbootjavaexam2.Model.Book;
 import com.spring.boot.springbootjavaexam2.Model.User;
 import com.spring.boot.springbootjavaexam2.Service.BookService;
+import com.spring.boot.springbootjavaexam2.Service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 public class BookController {
 
     private final BookService bookService = new BookService();
+    private final UserService userService;
 
     @GetMapping("/list")
     public ResponseEntity<?> getBooks(){
@@ -101,16 +103,28 @@ public class BookController {
         return ResponseEntity.status(HttpStatus.OK).body(booksByPages);
     }
 
-    @PutMapping("/status/unavailable/{iD}")
+    @PutMapping("/set-status/unavailable/{iD}")
     public ResponseEntity<?> makeBookUnavailable(@PathVariable String iD, @Valid @RequestBody User user, Errors errors){
         if (errors.hasErrors()){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new
                     ApiResponse(errors.getFieldError().getDefaultMessage()));
         }
 
-        if (!user.getRole().equals("librarian")){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new
-                    ApiResponse("Error, only librarian can change book status"));
+        ArrayList<User> users = userService.getUsers();
+        boolean found = false;
+        for (User u:users){
+            if (u.getID().equals(user.getID())){ // check internal database, not user values
+                found = true;
+                if (!u.getRole().equals("librarian")){
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new
+                            ApiResponse("Error, only librarian can change book status"));
+                }
+            }
+        }
+
+        if (!found){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new
+                    ApiResponse("Error, the user does not exist"));
         }
 
         if (bookService.makeBookUnavailable(iD)){
